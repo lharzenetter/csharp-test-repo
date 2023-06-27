@@ -9,5 +9,8 @@ pipeline {
             echo "building..."
             sleep 10
         }
+        stage ('Cleaup') {
+            echo 'cleaing...'
+        }
     }
 }
