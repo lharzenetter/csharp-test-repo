@@ -9,14 +9,14 @@ pipeline {
         stage ('Install dependencies') {
             steps {
                 sh 'dotnet --version'
-                sh 'dotnet restore ./GrpcGreeter/GrpcGreeter.csproj'
-                sh 'dotnet restore ./GrpcGreeterClient/GrpcGreeterClient.csproj'
+                sh 'dotnet restore GrpcGreeter/GrpcGreeter.csproj'
+                sh 'dotnet restore GrpcGreeterClient/GrpcGreeterClient.csproj'
             }
         }
         stage ('Build') {
             steps {
-                sh 'dotnet build --configuration Release --no-restore ./GrpcGreeter/GrpcGreeter.csproj'
-                sh 'dotnet build --configuration Release --no-restore ./GrpcGreeterClient/GrpcGreeterClient.csproj'
+                sh 'dotnet build --configuration Release --no-restore GrpcGreeter/GrpcGreeter.csproj'
+                sh 'dotnet build --configuration Release --no-restore GrpcGreeterClient/GrpcGreeterClient.csproj'
             }
         }
     }
