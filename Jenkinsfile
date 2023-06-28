@@ -18,7 +18,7 @@ pipeline {
         stage ('Build') {
             steps {
                 echo "building..."
-                dotnet --version
+                sh 'dotnet --version'
                 sleep 10
             }
         }
