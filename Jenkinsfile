@@ -8,8 +8,8 @@ pipeline {
     stages {
         stage ('Install dependencies') {
             steps {
-                sh 'dotnet restore ./GrpcGreeter/GrpcGreeter.csproj'
-                sh 'dotnet restore ./GrpcGreeterClient/GrpcGreeterClient.csproj'
+                dotnet restore ./GrpcGreeter/GrpcGreeter.csproj
+                dotnet restore ./GrpcGreeterClient/GrpcGreeterClient.csproj
             }
         }
         stage ('Build') {
