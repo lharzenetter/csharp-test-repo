@@ -4,4 +4,5 @@
 
 ## Dev Setup
 
-...
+Clone the repository: `git clone ssh://git@git.leuze.de:2022/rfid/test.git`
+
