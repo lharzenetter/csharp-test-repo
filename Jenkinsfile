@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'mcr.microsoft.com/dotnet/sdk:8.0-preview'
+        }
+    }
 
     stages {
         stage ('ls') {
@@ -10,14 +14,11 @@ pipeline {
                 }
             }
         }
-        stage ('Checkout') {
-            steps {
-                git branch: 'main', credentialsId: 'a1bddced-5054-4c5a-8445-a9ac6f5ba7ee', url: 'ssh://git@git.leuze.de:2022/rfid/test.git'
-            }
-        }
+
         stage ('Build') {
             steps {
                 echo "building..."
+                dotnet --version
                 sleep 10
             }
         }
