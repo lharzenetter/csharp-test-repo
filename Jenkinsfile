@@ -4,7 +4,10 @@ pipeline {
     stages {
         stage ('ls') {
             steps {
-                sh ls -al
+                script {
+                    def output = sh(returnStdout: true, script: 'ls -al')
+                    echo "Output: ${output}"
+                }
             }
         }
         stage ('Checkout') {
