@@ -2,15 +2,14 @@ pipeline {
     agent {
         docker {
             image 'mcr.microsoft.com/dotnet/sdk:8.0-preview'
+            args '-u root'
         }
     }
 
     stages {
         stage ('Install dependencies') {
             steps {
-                sh 'dotnet --version'
-                sh 'sleep 5000'
-                sh "dotnet restore GrpcGreeter/GrpcGreeter.csproj"
+                sh 'dotnet restore GrpcGreeter/GrpcGreeter.csproj'
                 sh 'dotnet restore GrpcGreeterClient/GrpcGreeterClient.csproj'
             }
         }
