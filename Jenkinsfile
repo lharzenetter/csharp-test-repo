@@ -3,8 +3,8 @@ pipeline {
 
     stages {
         stage ('ls') {
-            steps{
-                ls -al
+            steps {
+                sh ls -al
             }
         }
         stage ('Checkout') {
