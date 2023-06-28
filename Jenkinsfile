@@ -6,20 +6,16 @@ pipeline {
     }
 
     stages {
-        stage ('ls') {
+        stage ('Install dependencies') {
             steps {
-                script {
-                    def output = sh(returnStdout: true, script: 'ls -al')
-                    echo "Output: ${output}"
-                }
+                sh 'dotnet restore ./GrpcGreeter/GrpcGreeter.csproj'
+                sh 'dotnet restore ./GrpcGreeterClient/GrpcGreeterClient.csproj'
             }
         }
-
         stage ('Build') {
             steps {
-                echo "building..."
-                sh 'dotnet --version'
-                sleep 10
+                sh 'dotnet build --configuration Release --no-restore ./GrpcGreeter/GrpcGreeter.csproj'
+                sh 'dotnet build --configuration Release --no-restore ./GrpcGreeterClient/GrpcGreeterClient.csproj'
             }
         }
     }
