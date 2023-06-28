@@ -9,6 +9,7 @@ pipeline {
         stage ('Install dependencies') {
             steps {
                 sh 'dotnet --version'
+                sh 'sleep 5000'
                 sh "dotnet restore GrpcGreeter/GrpcGreeter.csproj"
                 sh 'dotnet restore GrpcGreeterClient/GrpcGreeterClient.csproj'
             }
