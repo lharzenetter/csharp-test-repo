@@ -15,12 +15,14 @@ pipeline {
             }
         }
         stage ('Build') {
-            steps {
-                parallel {
-                    server: {
+            parallel {
+                stage ('Server') {
+                    steps {
                         sh 'dotnet build --configuration Release --no-restore GrpcGreeter/GrpcGreeter.csproj'
                     }
-                    client: {
+                }
+                stage ('Client') {
+                    steps {
                         sh 'dotnet build --configuration Release --no-restore GrpcGreeterClient/GrpcGreeterClient.csproj'
                     }
                 }
