@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker {
             image 'mcr.microsoft.com/dotnet/sdk:8.0-preview'
+            // workaround to avoid jenkis to pass the jenkins user to the container
             args '-u root'
         }
     }
