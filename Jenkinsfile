@@ -8,8 +8,9 @@ pipeline {
     stages {
         stage ('Install dependencies') {
             steps {
-                dotnet restore ./GrpcGreeter/GrpcGreeter.csproj
-                dotnet restore ./GrpcGreeterClient/GrpcGreeterClient.csproj
+                sh 'dotnet --version'
+                sh 'dotnet restore ./GrpcGreeter/GrpcGreeter.csproj'
+                sh 'dotnet restore ./GrpcGreeterClient/GrpcGreeterClient.csproj'
             }
         }
         stage ('Build') {
