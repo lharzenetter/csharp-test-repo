@@ -30,11 +30,9 @@ pipeline {
             }
         }
         stage ('Test') {
-            stage ('GrpcGreeter.Tests') {
                 steps {
                     sh 'dotnet test ./GrpcGreeter.Tests/GrpcGreeter.Tests.csproj'
                 }
-            }
         }
     }
 }
