@@ -10,3 +10,6 @@ var reply = await client.SayHelloAsync(
 Console.WriteLine("Greeting: " + reply.Message);
 Console.WriteLine("Press any key to exit...");
 Console.ReadKey();
+
+// some change
+// another change
