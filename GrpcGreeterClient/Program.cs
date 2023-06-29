@@ -1,9 +1,17 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using CommandLine;
+
 using Grpc.Net.Client;
 using GrpcGreeter;
 
+using Lukas.Commandline;
+
+var options = Parser.Default.ParseArguments<CommandLineOptions>(args).Value;
+
+var endpoint = $"http://{options.Host}:{options.Port}";
+
 // The port number must match the port of the gRPC server.
-using var channel = GrpcChannel.ForAddress("http://localhost:5228");
+using var channel = GrpcChannel.ForAddress(endpoint);
 var client = new Greeter.GreeterClient(channel);
 var reply = await client.SayHelloAsync(
                   new HelloRequest { Name = "GreeterClient" });
