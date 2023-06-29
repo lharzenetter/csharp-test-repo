@@ -42,7 +42,7 @@ pipeline {
         stage ('Docker build') {
             agent {
                 docker {
-                    image 'docker'
+                    image 'docker:dind'
                     // workaround to avoid jenkis to pass the jenkins user to the container
                     // --privileged needed to build the images...
                     args '--privileged -u root'
