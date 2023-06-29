@@ -44,7 +44,8 @@ pipeline {
                 docker {
                     image 'docker'
                     // workaround to avoid jenkis to pass the jenkins user to the container
-                    args '-u root'
+                    // --privileged needed to build the images...
+                    args '--privileged -u root'
                 }
             }
             stages {
