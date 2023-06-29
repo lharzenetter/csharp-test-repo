@@ -9,4 +9,8 @@ public class CommandLineOptions {
 
     [Option(shortName: 'p', longName: "port", Required = false, Default = 5228, HelpText = "The port of the gRPC server")]
     public int Port { get; set; } = 5228;
+
+
+    [Value(index: 0, Required = true, HelpText = "The number to check")]
+    public int InputNumber { get; set; } = 1;
 }
