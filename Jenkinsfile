@@ -10,30 +10,32 @@ pipeline {
                     args '-u root'
                 }
             }
-            stage ('Install dependencies') {
-                steps {
-                    sh 'dotnet restore GrpcGreeter/GrpcGreeter.csproj'
-                    sh 'dotnet restore GrpcGreeterClient/GrpcGreeterClient.csproj'
-                }
-            }
-            stage ('Build') {
-                parallel {
-                    stage ('Server') {
-                        steps {
-                            sh 'dotnet build -c Release ./GrpcGreeter/GrpcGreeter.csproj'
-                        }
+            stages {
+                stage ('Install dependencies') {
+                    steps {
+                        sh 'dotnet restore GrpcGreeter/GrpcGreeter.csproj'
+                        sh 'dotnet restore GrpcGreeterClient/GrpcGreeterClient.csproj'
                     }
-                    stage ('Client') {
-                        steps {
-                            sh 'dotnet build -c Release ./GrpcGreeterClient/GrpcGreeterClient.csproj'
-                        }
-                    }
-                
                 }
-            }
-            stage ('Test') {
-                steps {
-                    sh 'dotnet test ./GrpcGreeter.Tests/GrpcGreeter.Tests.csproj'
+                stage ('Build') {
+                    parallel {
+                        stage ('Server') {
+                            steps {
+                                sh 'dotnet build -c Release ./GrpcGreeter/GrpcGreeter.csproj'
+                            }
+                        }
+                        stage ('Client') {
+                            steps {
+                                sh 'dotnet build -c Release ./GrpcGreeterClient/GrpcGreeterClient.csproj'
+                            }
+                        }
+                    
+                    }
+                }
+                stage ('Test') {
+                    steps {
+                        sh 'dotnet test ./GrpcGreeter.Tests/GrpcGreeter.Tests.csproj'
+                    }
                 }
             }
         }
