@@ -47,9 +47,13 @@ pipeline {
                     args '-u root'
                 }
             }
-            steps {
-                sh 'cd ./GrpcGreeter/'
-                sh 'docker build -t grpcgreeter .'
+            stages {
+                stage('Build Greeter Server') {
+                    steps {
+                        sh 'cd ./GrpcGreeter/'
+                        sh 'docker build -t grpcgreeter .'
+                    }
+                }
             }
         }
     }
