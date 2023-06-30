@@ -51,6 +51,10 @@ pipeline {
             }
             stages {
                 stage('Build Greeter Server') {
+                    environment {
+                        DOCKER_BUILDKIT = 0
+                        COMPOSE_DOCKER_CLI_BUILD = 0
+                    }
                     steps {
                         sh 'cd ./GrpcGreeter/'
                         sh 'docker build -t grpcgreeter -f Dockerfile .'
