@@ -42,7 +42,7 @@ pipeline {
         stage ('Docker build') {
             agent {
                 docker {
-                    image 'docker:dind-rootless'
+                    image 'docker:dind'
                     // -u root: workaround to avoid jenkis to pass the jenkins user to the container
                     // -v ... : workaround to enable docker to connect to the deamon
                     args '-u root -v /var/run/docker.sock:/var/run/docker.sock'
