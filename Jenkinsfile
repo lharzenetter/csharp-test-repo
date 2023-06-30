@@ -52,7 +52,7 @@ pipeline {
                 stage('Build Greeter Server') {
                     steps {
                         sh 'cd ./GrpcGreeter/'
-                        sh 'docker build -t grpcgreeter .'
+                        sh 'docker build'
                     }
                 }
             }
