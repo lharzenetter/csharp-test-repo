@@ -13,8 +13,10 @@ pipeline {
             stages {
                 stage ('Install dependencies') {
                     steps {
-                        sh 'dotnet restore GrpcGreeter/GrpcGreeter.csproj'
-                        sh 'dotnet restore GrpcGreeterClient/GrpcGreeterClient.csproj'
+                        sh '''
+                            dotnet restore GrpcGreeter/GrpcGreeter.csproj
+                            dotnet restore GrpcGreeterClient/GrpcGreeterClient.csproj
+                        '''
                     }
                 }
                 stage ('Build') {
@@ -44,7 +46,7 @@ pipeline {
                 docker {
                     image 'docker:dind'
                     // -u root: workaround to avoid jenkis to pass the jenkins user to the container
-                    // -v ... : workaround to enable docker to connect to the deamon
+                    // -v ... : workaround to enable docker to connect to the docker deamon
                     args '-u root -v /var/run/docker.sock:/var/run/docker.sock'
                 }
                 // label 'dockerDeamon'
