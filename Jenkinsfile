@@ -58,7 +58,7 @@ pipeline {
                     steps {
                         // IMPORTANT: Use single quotes NOT double quotes! Otherwise the creds are printed to the console...
                         sh '''
-                            docker login restesting.azurecr.io --username 00000000-0000-0000-0000-000000000000 --password-stdin <<< $AZURE_CR_ACCESS_TOKEN
+                            echo $AZURE_CR_ACCESS_TOKEN | docker login restesting.azurecr.io --username 00000000-0000-0000-0000-000000000000 --password-stdin
                             docker build -t restesting.azurecr.io/res/grpcgreeter:latest ./GrpcGreeter/
                             docker push restesting.azurecr.io/res/grpcgreeter:latest
                             docker logout
