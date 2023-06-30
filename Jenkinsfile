@@ -43,16 +43,16 @@ pipeline {
             agent {
                 docker {
                     image 'docker:dind-rootless'
-                    // workaround to avoid jenkis to pass the jenkins user to the container
-                    // --privileged needed to build the images...
-                    args '--privileged -u root'
+                    // -u root: workaround to avoid jenkis to pass the jenkins user to the container
+                    // -v ... : workaround to enable docker to connect to the deamon
+                    args '-u root -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
             stages {
                 stage('Build Greeter Server') {
                     steps {
                         sh 'cd ./GrpcGreeter/'
-                        sh 'docker build'
+                        sh 'docker build -t grpcgreeter .'
                     }
                 }
             }
