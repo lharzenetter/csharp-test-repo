@@ -41,6 +41,14 @@ pipeline {
                 }
             }
         }
+        stage('Scan') {
+            agent {
+                docker { image 'scanmycode/scanmycode3-ce:worker-cli' }
+            }
+            steps {
+                sh 'sh <(curl https://dl.betterscan.io/cli.sh)'
+            }
+        }
         stage ('Docker build') {
             agent {
                 docker {
