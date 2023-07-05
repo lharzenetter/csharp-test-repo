@@ -54,11 +54,6 @@ pipeline {
                 AZURE_CR_ACCESS_TOKEN = credentials('azure-cr-token')
             }
             stages {
-                stage('Scan') {
-            steps {
-                sh 'sh <(curl https://dl.betterscan.io/cli.sh)'
-            }
-        }
                 stage('Build and Push Container') {
                     steps {
                         // IMPORTANT: Use single quotes NOT double quotes! Otherwise the creds are printed to the console...
