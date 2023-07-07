@@ -11,32 +11,37 @@ pipeline {
                 }
             }
             stages {
-                stage ('Install dependencies') {
+                stage('SonarQube Begin') {
+                    environment {
+                        SONAR_TOKEN = credentials('test-project-sonar-token')
+                    }
                     steps {
                         sh '''
-                            dotnet restore GrpcGreeter/GrpcGreeter.csproj
-                            dotnet restore GrpcGreeterClient/GrpcGreeterClient.csproj
+                            dotnet tool install --global dotnet-sonarscanner
+                            dotnet tool install --global dotnet-coverage
                         '''
+                        sh 'dotnet sonarscanner begin /k:"RFID_test_AYkw2FhmQSRf8kByoRWg" /d:sonar.host.url="https://res-dev.westeurope.cloudapp.azure.com/sonarqube" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.login=$SONAR_TOKEN'
                     }
                 }
                 stage ('Build') {
-                    parallel {
-                        stage ('Server') {
-                            steps {
-                                sh 'dotnet build -c Release ./GrpcGreeter/GrpcGreeter.csproj'
-                            }
+                    steps {
+                            sh 'dotnet build -c Release test.sln'
                         }
-                        stage ('Client') {
-                            steps {
-                                sh 'dotnet build -c Release ./GrpcGreeterClient/GrpcGreeterClient.csproj'
-                            }
-                        }
-                    
                     }
                 }
                 stage ('Test') {
                     steps {
-                        sh 'dotnet test ./GrpcGreeter.Tests/GrpcGreeter.Tests.csproj'
+                        sh '''
+                            dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
+        	            '''
+                    }
+                }
+                stage('SonarQube End') {
+                    environment {
+                        SONAR_TOKEN = credentials('test-project-sonar-token')
+                    }
+                    steps {
+                        sh 'dotnet sonarscanner end /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.login=$SONAR_TOKEN'
                     }
                 }
             }
