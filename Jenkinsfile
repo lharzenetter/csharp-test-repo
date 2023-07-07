@@ -10,10 +10,10 @@ pipeline {
                     args '-u root --pull always'
                 }
             }
+            environment {
+                SONAR_TOKEN = credentials('test-project-sonar-token')
+            }
             stages {
-                environment {
-                    SONAR_TOKEN = credentials('test-project-sonar-token')
-                }
                 stage('SonarQube Begin') {
                     steps {
                         sh '''
