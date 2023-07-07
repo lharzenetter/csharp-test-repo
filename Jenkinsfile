@@ -11,10 +11,10 @@ pipeline {
                 }
             }
             stages {
+                environment {
+                    SONAR_TOKEN = credentials('test-project-sonar-token')
+                }
                 stage('SonarQube Begin') {
-                    environment {
-                        SONAR_TOKEN = credentials('test-project-sonar-token')
-                    }
                     steps {
                         sh '''
                             dotnet tool install --global dotnet-sonarscanner
@@ -25,21 +25,17 @@ pipeline {
                 }
                 stage ('Build') {
                     steps {
-                            sh 'dotnet build -c Release test.sln'
-                        }
+                        sh 'dotnet build -c Release test.sln'
                     }
                 }
                 stage ('Test') {
                     steps {
                         sh '''
                             dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
-        	            '''
+                        '''
                     }
                 }
                 stage('SonarQube End') {
-                    environment {
-                        SONAR_TOKEN = credentials('test-project-sonar-token')
-                    }
                     steps {
                         sh 'dotnet sonarscanner end /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.login=$SONAR_TOKEN'
                     }
