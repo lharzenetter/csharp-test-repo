@@ -27,7 +27,7 @@ pipeline {
                             dotnet build -c Release test.sln
                             dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
 
-                            dotnet sonarscanner end /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.login=$SONAR_TOKEN
+                            dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN
                         '''
                     }
                 }
