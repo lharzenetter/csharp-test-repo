@@ -18,7 +18,6 @@ pipeline {
                     steps {
                         sh '''
                             dotnet tool install --global dotnet-sonarscanner
-                            dotnet tool install --global dotnet-coverage
                             export PATH="$PATH:/root/.dotnet/tools"
                             dotnet sonarscanner begin /k:"RFID_test_AYkw2FhmQSRf8kByoRWg" /d:sonar.host.url="https://res-dev.westeurope.cloudapp.azure.com/sonarqube" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.login=$SONAR_TOKEN
                         '''
@@ -32,6 +31,8 @@ pipeline {
                 stage ('Test') {
                     steps {
                         sh '''
+                            dotnet tool install --global dotnet-coverage
+                            export PATH="$PATH:/root/.dotnet/tools"
                             dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
                         '''
                     }
