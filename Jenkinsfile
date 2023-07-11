@@ -13,19 +13,15 @@ pipeline {
             environment {
                 SONAR_TOKEN = credentials('test-project-sonar-token')
             }
-            stages {
-                stage('Build and Test') {
-                    steps {
-                        sh '''
-                            dotnet sonarscanner begin /k:"RFID_test_AYkw2FhmQSRf8kByoRWg" /d:sonar.host.url="https://res-dev.westeurope.cloudapp.azure.com/sonarqube" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.login=$SONAR_TOKEN
+            steps {
+                sh '''
+                    dotnet sonarscanner begin /k:"RFID_test_AYkw2FhmQSRf8kByoRWg" /d:sonar.host.url="https://res-dev.westeurope.cloudapp.azure.com/sonarqube" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.login=$SONAR_TOKEN
 
-                            dotnet build -c Release test.sln
-                            dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
+                    dotnet build -c Release test.sln
+                    dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
 
-                            dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN
-                        '''
-                    }
-                }
+                    dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN
+                '''
             }
         }
         stage ('Docker build') {
@@ -40,21 +36,17 @@ pipeline {
             environment {
                 AZURE_CR_ACCESS_TOKEN = credentials('azure-cr-token')
             }
-            stages {
-                stage('Build and Push Container') {
-                    steps {
-                        // IMPORTANT: Use single quotes NOT double quotes! Otherwise the creds are printed to the console...
-                        sh '''
-                            echo $AZURE_CR_ACCESS_TOKEN | docker login restesting.azurecr.io --username 00000000-0000-0000-0000-000000000000 --password-stdin
+            steps {
+                // IMPORTANT: Use single quotes NOT double quotes! Otherwise the creds are printed to the console...
+                sh '''
+                    echo $AZURE_CR_ACCESS_TOKEN | docker login restesting.azurecr.io --username 00000000-0000-0000-0000-000000000000 --password-stdin
 
-                            docker build -t restesting.azurecr.io/res/grpcgreeter:latest ./GrpcGreeter/
-                            docker push restesting.azurecr.io/res/grpcgreeter:latest
+                    docker build -t restesting.azurecr.io/res/grpcgreeter:latest ./GrpcGreeter/
+                    docker push restesting.azurecr.io/res/grpcgreeter:latest
 
-                            docker logout
-                            docker system prune -a -f --volumes
-                        '''
-                    }
-                }
+                    docker logout
+                    docker system prune -a -f --volumes
+                '''
             }
         }
     }

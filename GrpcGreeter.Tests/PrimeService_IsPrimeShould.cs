@@ -41,4 +41,11 @@ public class PrimeService_IsPrimeShould
 
         Assert.IsTrue(result, $"{value} should be prime!");
     }
+
+    [TestCase(77)]
+    public void IsNotPrime_InputPrimeNumbers_ReturnFalse(int value) {
+        var result = _primeService.IsPrime(value);
+
+        Assert.IsFalse(result, $"{value} should NOT be prime!");
+    }
 }
