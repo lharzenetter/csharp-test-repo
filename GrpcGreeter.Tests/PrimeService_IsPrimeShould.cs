@@ -8,17 +8,15 @@ public class PrimeService_IsPrimeShould
     private PrimeService _primeService;
 
     [SetUp]
-    public void SetUp()
-    {
+    public void SetUp() {
         _primeService = new PrimeService();
     }
 
     [Test]
-    public void IsPrime_InputIs1_ReturnFalse()
-    {
+    public void IsPrime_InputIs1_ReturnFalse() {
         var result = _primeService.IsPrime(1);
 
-        Assert.IsFalse(result, "1 should not be prime");
+        Assert.That(result, Is.False);
     }
 
     [TestCase(-1)]
@@ -27,7 +25,7 @@ public class PrimeService_IsPrimeShould
     public void IsPrime_InputLessThan2_ReturnFalse(int value) {
         var result = _primeService.IsPrime(value);
 
-        Assert.IsFalse(result, $"{value} should not be prime!");
+        Assert.That(result, Is.False);
     }
 
     [TestCase(2)]
@@ -39,13 +37,13 @@ public class PrimeService_IsPrimeShould
     public void IsPrime_InputPrimeNumbers_ReturnTrue(int value) {
         var result = _primeService.IsPrime(value);
 
-        Assert.IsTrue(result, $"{value} should be prime!");
+        Assert.That(result, Is.True);
     }
 
     [TestCase(77)]
     public void IsNotPrime_InputPrimeNumbers_ReturnFalse(int value) {
         var result = _primeService.IsPrime(value);
 
-        Assert.IsFalse(result, $"{value} should NOT be prime!");
+        Assert.That(result, Is.False);
     }
 }

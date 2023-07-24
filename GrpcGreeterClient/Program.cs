@@ -16,6 +16,4 @@ await Parser.Default.ParseArguments<CommandLineOptions>(args).WithParsedAsync(as
     var reply = await client.SayHelloAsync(
                       new HelloRequest { Name = "GreeterClient", CheckNumer = options.InputNumber });
     Console.WriteLine(reply.Message);
-    // Console.WriteLine("Press any key to exit...");
-    // Console.ReadKey();
 });
