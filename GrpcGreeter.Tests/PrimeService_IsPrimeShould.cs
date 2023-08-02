@@ -3,8 +3,8 @@ using GrpcGreeter.Services;
 namespace GrpcGreeter.Tests;
 
 [TestFixture]
-public class PrimeService_IsPrimeShould
-{
+public class PrimeService_IsPrimeShould {
+    
     private PrimeService _primeService;
 
     [SetUp]

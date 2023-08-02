@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using CommandLine;
 
 using Grpc.Net.Client;
@@ -6,8 +6,7 @@ using GrpcGreeter;
 
 using Lukas.Commandline;
 
-await Parser.Default.ParseArguments<CommandLineOptions>(args).WithParsedAsync(async (CommandLineOptions options) =>
-{
+await Parser.Default.ParseArguments<CommandLineOptions>(args).WithParsedAsync(async (CommandLineOptions options) => {
     var endpoint = $"http://{options.Host}:{options.Port}";
 
     // The port number must match the port of the gRPC server.
