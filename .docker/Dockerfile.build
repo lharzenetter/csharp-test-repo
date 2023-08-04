@@ -1,0 +1,9 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0-preview
+
+RUN dotnet tool install --global dotnet-sonarscanner \
+    && dotnet tool install --global dotnet-coverage \
+    && apt-get update \
+    && apt-get install -y libxml2 openjdk-17-jdk \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV PATH="$PATH:/root/.dotnet/tools"
