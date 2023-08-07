@@ -1,17 +1,15 @@
 using Google.Protobuf;
 using Grpc.Core;
-using Leuze.RES.Services.Asset.grpc;
-using System.Text;
 using Leuze.RES.Gateways.OPC.UA.grpc;
+using Leuze.RES.Services.Asset.grpc;
 
 namespace GrpcTestOpcUaServer.Services;
 
 public class AssetMock : AssetGrpc.AssetGrpcBase {
 
     private readonly ILogger<AssetMock> _logger;
-    private readonly Dictionary<string, string> tags = new Dictionary<string, string>();
 
-    public AssetMock(ILogger<AssetMock> logger){
+    public AssetMock(ILogger<AssetMock> logger) {
         _logger = logger;
     }
 
@@ -24,11 +22,12 @@ public class AssetMock : AssetGrpc.AssetGrpcBase {
     }
 
     public override Task<ReadTagResponse> ReadTag(ReadTagRequest request, ServerCallContext context) {
-        tags.TryGetValue(request.Identifier, out var value);
+        TagList.Instance.GetTags
+            .TryGetValue(request.Identifier, out var value);
 
         return Task.FromResult(new ReadTagResponse {
             ResultCode = ResultCode.Good,
-            ResultData = ByteString.CopyFrom(value, Encoding.UTF8),
+            ResultData = ByteString.CopyFromUtf8(value == null ? "NO VALUE!!" : value),
             Status = AutoIdOperationStatusEnumeration.Success0
         });
     }
@@ -38,7 +37,7 @@ public class AssetMock : AssetGrpc.AssetGrpcBase {
     }
 
     public override Task<WriteTagResponse> WriteTag(WriteTagRequest request, ServerCallContext context) {
-        tags[request.Identifier] = request.Data.ToStringUtf8();
+        TagList.Instance.GetTags[request.Identifier] = request.Data.ToStringUtf8();
 
         return Task.FromResult(new WriteTagResponse {
             ResultCode = ResultCode.Good,
