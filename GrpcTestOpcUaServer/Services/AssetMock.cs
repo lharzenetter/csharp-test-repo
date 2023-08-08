@@ -13,15 +13,26 @@ public class AssetMock : AssetGrpc.AssetGrpcBase {
         _logger = logger;
     }
 
-    public override Task<KillTagResponse> KillTag(KillTagRequest request, ServerCallContext context) {
-        return base.KillTag(request, context);
+    public override Task<KillTagResponse> KillTag(KillTagRequest request, ServerCallContext context) { 
+        _logger.LogInformation("Received KillTag request for {id}", request.Identifier);
+
+        return Task.FromResult(new KillTagResponse {
+            ResultCode = ResultCode.Good,
+            Status = AutoIdOperationStatusEnumeration.Success0
+        });
     }
 
     public override Task<LockTagResponse> LockTag(LockTagRequest request, ServerCallContext context) {
-        return base.LockTag(request, context);
+        _logger.LogInformation("Received LockTag request for {id}", request.Identifier); 
+        
+        return Task.FromResult(new LockTagResponse {
+            ResultCode = ResultCode.Good,
+            Status = AutoIdOperationStatusEnumeration.Success0
+        });
     }
 
     public override Task<ReadTagResponse> ReadTag(ReadTagRequest request, ServerCallContext context) {
+        _logger.LogInformation("Received ReadTag request for {id}", request.Identifier);
         TagList.Instance.GetTags
             .TryGetValue(request.Identifier, out var value);
 
@@ -33,10 +44,17 @@ public class AssetMock : AssetGrpc.AssetGrpcBase {
     }
 
     public override Task<SetTagPasswordResponse> SetTagPassword(SetTagPasswordRequest request, ServerCallContext context) {
-        return base.SetTagPassword(request, context);
+        _logger.LogInformation("Received SetTagPassword request for {id}", request.Identifier);
+
+        return Task.FromResult(new SetTagPasswordResponse {
+            Status = AutoIdOperationStatusEnumeration.Success0,
+            ResultCode = ResultCode.Good
+        });
     }
 
     public override Task<WriteTagResponse> WriteTag(WriteTagRequest request, ServerCallContext context) {
+        _logger.LogInformation("Received WriteTag request for {id}", request.Identifier);
+
         TagList.Instance.GetTags[request.Identifier] = request.Data.ToStringUtf8();
 
         return Task.FromResult(new WriteTagResponse {
@@ -46,6 +64,20 @@ public class AssetMock : AssetGrpc.AssetGrpcBase {
     }
 
     public override Task<WriteTagIdResponse> WriteTagId(WriteTagIdRequest request, ServerCallContext context) {
-        return base.WriteTagId(request, context);
+        _logger.LogInformation("Received WriteTagId request for {id}", request.Identifier);
+
+        var tags = TagList.Instance.GetTags;
+
+        tags.TryGetValue(request.Identifier, out var value);
+
+        if (value != null) {
+            tags.Remove(request.Identifier);
+            tags.Add(request.NewUid.ToStringUtf8(), value);    
+        }
+
+        return Task.FromResult(new WriteTagIdResponse {
+            ResultCode = ResultCode.Good,
+            Status = AutoIdOperationStatusEnumeration.Success0
+        });
     }
 }
