@@ -24,7 +24,7 @@ pipeline {
                         dotnet build -c Release test.sln
                         dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
 
-                        dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN
+                        dotnet sonarscanner end /d:sonar.token=$SONAR_TOKEN
                     '''
                     stash includes: '**/bin/Release/*/GrpcGreeter.dll', name: 'GRPCGreeter'
                     stash includes: '**/bin/Release/*/GrpcGreeterClient.dll', name: 'GRPCGreeterClient'
@@ -56,28 +56,28 @@ pipeline {
                 '''
             }
         }
-        stage('Docker build') {
-            when {
-                branch 'main'
-            }
-            agent {
-                label 'docker'
-            }
-            environment {
-                AZURE_CR_ACCESS_TOKEN = credentials('azure-cr-token')
-            }
-            steps {
-                // IMPORTANT: Use single quotes NOT double quotes! Otherwise the creds are printed to the console...
-                sh '''
-                    echo $AZURE_CR_ACCESS_TOKEN | docker login restesting.azurecr.io --username 00000000-0000-0000-0000-000000000000 --password-stdin
+        // stage('Docker build') {
+        //     when {
+        //         branch 'main'
+        //     }
+        //     agent {
+        //         label 'docker'
+        //     }
+        //     environment {
+        //         AZURE_CR_ACCESS_TOKEN = credentials('azure-cr-token')
+        //     }
+        //     steps {
+        //         // IMPORTANT: Use single quotes NOT double quotes! Otherwise the creds are printed to the console...
+        //         sh '''
+        //             echo $AZURE_CR_ACCESS_TOKEN | docker login restesting.azurecr.io --username 00000000-0000-0000-0000-000000000000 --password-stdin
 
-                    docker build -t restesting.azurecr.io/res/grpcgreeter:latest ./GrpcGreeter/
-                    docker push restesting.azurecr.io/res/grpcgreeter:latest
+        //             docker build -t restesting.azurecr.io/res/grpcgreeter:latest ./GrpcGreeter/
+        //             docker push restesting.azurecr.io/res/grpcgreeter:latest
 
-                    docker logout
-                    docker system prune -a -f --volumes
-                '''
-            }
-        }
+        //             docker logout
+        //             docker system prune -a -f --volumes
+        //         '''
+        //     }
+        // }
     }
 }
