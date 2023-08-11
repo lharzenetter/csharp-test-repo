@@ -1,0 +1,103 @@
+syntax = "proto3";
+
+option csharp_namespace = "Leuze.RES.Services.Asset.grpc";
+
+package leue_res_asset_service;
+
+import "opc_ua_types.proto";
+import "opc_ua_status_codes.proto";
+
+service AssetGrpc {
+    rpc KillTag (KillTagRequest) returns (KillTagResponse);
+    rpc LockTag (LockTagRequest) returns (LockTagResponse);
+    rpc SetTagPassword (SetTagPasswordRequest) returns (SetTagPasswordResponse);
+    rpc ReadTag (ReadTagRequest) returns (ReadTagResponse);
+    rpc WriteTag (WriteTagRequest) returns (WriteTagResponse);
+    rpc WriteTagId (WriteTagIdRequest) returns (WriteTagIdResponse);
+}
+
+message KillTagRequest {
+    string identifier = 1;
+    // CodeTypeDataType is a subtype of string that only allows secific prefefined
+    // values: "RAW:BYTES", "RAW:STRING", "EPC", "UID", "GS1", "ASC", and "URI".
+    // However, it also allows "CUSTOM:xxx" which is why we cannot use an enum.
+    // do we need that?!
+    string code_type = 2;
+    bytes KillPassword = 3;
+}
+
+message KillTagResponse {
+    leuze_res_opc_ua.ResultCode result_code = 1;
+    leuze_res_opc_ua.AutoIdOperationStatusEnumeration status = 2;
+}
+
+message LockTagRequest {
+    string identifier = 1;
+    string code_type = 2;
+    bytes password = 3;
+    leuze_res_opc_ua.RfidLockRegionEnumeration region = 4;
+    leuze_res_opc_ua.RfidLockOperationEnumeration Lock = 5;
+    uint32 offset = 6;
+    uint32 length = 7;
+}
+
+message LockTagResponse {
+    leuze_res_opc_ua.ResultCode result_code = 1; // one of [Bad_MethodInvalid, Bad_InvalidState]
+    leuze_res_opc_ua.AutoIdOperationStatusEnumeration status = 2;
+}
+
+message SetTagPasswordRequest {
+    string identifier = 1;
+    string code_type = 2;
+    leuze_res_opc_ua.RfidPasswordTypeEnumeration password_type = 3;
+    bytes access_password = 4;
+    bytes new_password = 5;
+}
+
+message SetTagPasswordResponse {
+    leuze_res_opc_ua.ResultCode result_code = 1; // one of [Bad_MethodInvalid, Bad_InvalidState]
+    leuze_res_opc_ua.AutoIdOperationStatusEnumeration status = 2;
+}
+
+message ReadTagRequest {
+    string identifier = 1;
+    string code_type = 2;
+    uint32 region = 3; // uint16 in OPC UA
+    uint32 offset = 4;
+    uint32 length = 5;
+    bytes password = 6;
+}
+
+message ReadTagResponse {
+    leuze_res_opc_ua.ResultCode result_code = 1; // one of [Bad_MethodInvalid, Bad_InvalidState]
+    bytes result_data = 2;
+    leuze_res_opc_ua.AutoIdOperationStatusEnumeration status = 3;
+}
+
+message WriteTagRequest {
+    string identifier = 1;
+    string code_type = 2;
+    uint32 region = 3; // uint16 in OPC UA
+    uint32 offset = 4;
+    bytes data = 5;
+    bytes password = 6;
+}
+
+message WriteTagResponse {
+    leuze_res_opc_ua.ResultCode result_code = 1; // one of [Bad_MethodInvalid, Bad_InvalidState]
+    leuze_res_opc_ua.AutoIdOperationStatusEnumeration status = 2;
+}
+
+message WriteTagIdRequest {
+    string identifier = 1;
+    string code_type = 2;
+    bytes new_uid = 3;
+    bytes afi = 4;
+    bool toggle = 5;
+    bytes password = 6;
+}
+
+message WriteTagIdResponse {
+    leuze_res_opc_ua.ResultCode result_code = 1; // one of [Bad_MethodInvalid, Bad_InvalidState]
+    leuze_res_opc_ua.AutoIdOperationStatusEnumeration status = 2;
+}
