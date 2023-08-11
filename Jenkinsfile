@@ -1,3 +1,4 @@
+/* groovylint-disable CompileStatic */
 pipeline {
     agent none
 
@@ -60,12 +61,7 @@ pipeline {
                 branch 'main'
             }
             agent {
-                docker {
-                    image 'docker:dind'
-                    // -u root: workaround to avoid jenkis to pass the jenkins user to the container
-                    // -v ... : workaround to enable docker to connect to the docker deamon
-                    args '-u root --pull always -v /var/run/docker.sock:/var/run/docker.sock'
-                }
+                docker
             }
             environment {
                 AZURE_CR_ACCESS_TOKEN = credentials('azure-cr-token')
