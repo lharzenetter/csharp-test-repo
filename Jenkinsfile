@@ -14,16 +14,20 @@ pipeline {
                 SONAR_TOKEN = credentials('test-project-sonar-token')
             }
             steps {
-                sh '''
-                    dotnet sonarscanner begin /k:"RFID_test_AYkw2FhmQSRf8kByoRWg" /d:sonar.host.url="https://res-dev.westeurope.cloudapp.azure.com/sonarqube" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.login=$SONAR_TOKEN
+                withSonarQubeEnv(installationName: 'SonarQube') {
+                    sh '''
+                        dotnet sonarscanner begin /k:"RFID_test_AYkw2FhmQSRf8kByoRWg" \
+                        /d:sonar.host.url="https://res-dev.westeurope.cloudapp.azure.com/sonarqube" \
+                        /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.login=$SONAR_TOKEN
 
-                    dotnet build -c Release test.sln
-                    dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
+                        dotnet build -c Release test.sln
+                        dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
 
-                    dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN
-                '''
-                stash includes: '**/bin/Release/*/GrpcGreeter.dll', name: 'GRPCGreeter'
-                stash includes: '**/bin/Release/*/GrpcGreeterClient.dll', name: 'GRPCGreeterClient'
+                        dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN
+                    '''
+                    stash includes: '**/bin/Release/*/GrpcGreeter.dll', name: 'GRPCGreeter'
+                    stash includes: '**/bin/Release/*/GrpcGreeterClient.dll', name: 'GRPCGreeterClient'
+                }
             }
         }
         stage ('Docker from stash') {
