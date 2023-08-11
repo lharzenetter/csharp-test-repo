@@ -61,7 +61,7 @@ pipeline {
                 branch 'main'
             }
             agent {
-                docker
+                label 'docker'
             }
             environment {
                 AZURE_CR_ACCESS_TOKEN = credentials('azure-cr-token')
