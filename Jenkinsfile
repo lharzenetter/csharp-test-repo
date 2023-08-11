@@ -31,8 +31,10 @@ pipeline {
             }
         }
         stage('Quality Gate') {
-            timeout(time: 2, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline:true
+            steps {
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline:true
+                }
             }
         }
         stage('Docker from stash') {
