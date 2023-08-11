@@ -2,7 +2,7 @@ pipeline {
     agent none
 
     stages {
-        stage ('Build and Test') {
+        stage('Build and Test') {
             agent {
                 docker {
                     image 'lharzenetter/dotnet_builder:8.0-preview-sonarqube'
@@ -18,7 +18,7 @@ pipeline {
                     sh '''
                         dotnet sonarscanner begin /k:"RFID_test_AYkw2FhmQSRf8kByoRWg" \
                         /d:sonar.host.url="https://res-dev.westeurope.cloudapp.azure.com/sonarqube" \
-                        /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.login=$SONAR_TOKEN
+                        /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.token=$SONAR_TOKEN
 
                         dotnet build -c Release test.sln
                         dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
@@ -30,7 +30,12 @@ pipeline {
                 }
             }
         }
-        stage ('Docker from stash') {
+        stage('Quality Gate') {
+            timeout(time: 2, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline:true
+            }
+        }
+        stage('Docker from stash') {
             agent {
                 docker {
                     image 'docker:dind'
@@ -48,7 +53,7 @@ pipeline {
                 '''
             }
         }
-        stage ('Docker build') {
+        stage('Docker build') {
             when {
                 branch 'main'
             }
