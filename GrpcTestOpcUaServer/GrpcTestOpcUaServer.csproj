@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos/asset_service.proto" GrpcServices="Server" />
-    <Protobuf Include="Protos/opc_ua_status_codes.proto" GrpcServices="None" /> 
-    <Protobuf Include="Protos/opc_ua_types.proto" GrpcServices="None" /> 
+    <Protobuf Include="Protos/opc_ua_status_codes.proto" GrpcServices="None" ProtoRoot="Protos" /> 
+    <Protobuf Include="Protos/opc_ua_types.proto" GrpcServices="None" ProtoRoot="Protos" /> 
+    <Protobuf Include="Protos/asset_service.proto" GrpcServices="Server" ProtoRoot="Protos" />
   </ItemGroup>
 
   <ItemGroup>
