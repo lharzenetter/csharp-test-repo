@@ -14,9 +14,16 @@ service Greeter {
 message HelloRequest {
   string name = 1;
   int32 checkNumer = 2;
+  CheckType analysisType = 3;
 }
 
 // The response message containing the greetings.
 message HelloReply {
   string message = 1;
+}
+
+enum CheckType {
+    Prime = 0;
+    EvenNumber = 1;
+    OddNumber = 2;
 }
