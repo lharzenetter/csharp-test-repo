@@ -30,6 +30,8 @@ pipeline {
                     stash includes: '**/bin/Release/*/GrpcGreeterClient.dll', name: 'GRPCGreeterClient'
                 }
             }
+
+            
         }
         stage('Quality Gate') {
             steps {
