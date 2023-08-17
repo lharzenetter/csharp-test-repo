@@ -15,12 +15,12 @@ pipeline {
             }
             steps {
                 sh '''
-                    dotnet sonarscanner begin /k:"RFID_test_AYkw2FhmQSRf8kByoRWg" /d:sonar.host.url="https://res-dev.westeurope.cloudapp.azure.com/sonarqube" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.login=$SONAR_TOKEN
+                    dotnet sonarscanner begin /k:"RFID_test_AYn-xYqTYbUcb1R9dfKP" /d:sonar.host.url="https://res-dev.westeurope.cloudapp.azure.com/sonarqube" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.login=sqp_c0ecc6280fef0a6fbb95bbdf129515f5921e239f
 
                     dotnet build -c Release test.sln
                     dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
 
-                    dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN
+                    dotnet sonarscanner end /d:sonar.login=sqp_c0ecc6280fef0a6fbb95bbdf129515f5921e239f
                 '''
                 stash includes: '**/bin/Release/*/GrpcGreeter.dll', name: 'GRPCGreeter'
                 stash includes: '**/bin/Release/*/GrpcGreeterClient.dll', name: 'GRPCGreeterClient'
