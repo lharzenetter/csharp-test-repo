@@ -1,5 +1,3 @@
-using System;
-
 namespace GrpcGreeter.Services;
 
 public class PrimeService {

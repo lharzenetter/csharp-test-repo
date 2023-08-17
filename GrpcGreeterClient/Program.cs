@@ -1,4 +1,3 @@
-using System;
 using CommandLine;
 
 using Grpc.Net.Client;

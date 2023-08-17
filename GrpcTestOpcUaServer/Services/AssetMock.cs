@@ -38,7 +38,7 @@ public class AssetMock : AssetGrpc.AssetGrpcBase {
 
         return Task.FromResult(new ReadTagResponse {
             ResultCode = ResultCode.Good,
-            ResultData = ByteString.CopyFromUtf8(value == null ? "NO VALUE!!" : value),
+            ResultData = ByteString.CopyFromUtf8(value ?? "NO VALUE!!"),
             Status = AutoIdOperationStatusEnumeration.Success0
         });
     }
