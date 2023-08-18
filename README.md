@@ -5,4 +5,5 @@
 ## Dev Setup
 
 1. Clone the repository: `git clone ssh://git@git.leuze.de:2022/rfid/test.git`
-2. Run `dotnet restore` in both folders
+2. Run `dotnet restore` in the project root
+3. Run `dotnet build`in the project root

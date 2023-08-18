@@ -37,4 +37,5 @@ public class GreeterService : Greeter.GreeterBase {
             Message = $"Hello {request.Name}!\nYou supplied a wrong check type!"
         });
     }
+
 }

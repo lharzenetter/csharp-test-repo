@@ -20,17 +20,29 @@ pipeline {
                         dotnet sonarscanner begin /k:"RFID_test_AYn-xYqTYbUcb1R9dfKP" \
                         /d:sonar.host.url="https://res-dev.westeurope.cloudapp.azure.com/sonarqube" \
                         /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.token=sqp_c0ecc6280fef0a6fbb95bbdf129515f5921e239f
+
                         dotnet build -c Release test.sln
                         dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
 
-                        dotnet sonarscanner end /d:sonar.login=sqp_c0ecc6280fef0a6fbb95bbdf129515f5921e239f
+                        dotnet sonarscanner end /d:sonar.token=sqp_c0ecc6280fef0a6fbb95bbdf129515f5921e239f
                     '''
+
                     stash includes: '**/bin/Release/*/GrpcGreeter.dll', name: 'GRPCGreeter'
                     stash includes: '**/bin/Release/*/GrpcGreeterClient.dll', name: 'GRPCGreeterClient'
                 }
             }
         }
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline:true
+                }
+            }
+        }
         stage('Docker from stash') {
+            when {
+                branch 'main'
+            }
             agent {
                 docker {
                     image 'docker:dind'
