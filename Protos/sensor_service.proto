@@ -1,0 +1,81 @@
+// This file describes the endpoints of the Sensor Service.
+syntax = "proto3";
+
+package leuze_res_sensor_service;
+
+import "opc_ua_status_codes.proto";
+
+option csharp_namespace = "Leuze.RES.Services.Sensors.grpc";
+
+service SensorGrpcService {
+    rpc AddSensor (AddSensorRequest) returns (AddSensorResponse);
+    rpc ConfigureSensor (ConfigureSensorRequest) returns (ConfigureSensorResponse);
+    rpc ConnectSensor (ConnectSensorRequest) returns (ConnectSensorResponse);
+    rpc DeleteSensor (DeleteSensorRequest) returns (DeleteSensorResponse);
+    rpc DisconnectSensor (DisconnectSensorRequest) returns (DisconnectSensorResponse);
+    rpc DiscoverSensors (DiscoverSensorsRequest) returns (DiscoverSensorsResponse);
+}
+
+message AddSensorRequest {
+    string name = 1;
+    string serial_number = 2;
+    string ip_address = 3;
+    int32 port = 4;
+    string mac_address = 5;
+    string description = 6;
+}
+
+message AddSensorResponse {
+    leuze_res_opc_ua.ResultCode status = 1;
+    string sensor_id = 2;
+}
+
+message ConfigureSensorRequest {
+    string sensor_id = 1;
+    string name = 2;
+    string serial_number = 3;
+    string ip_address = 4;
+    int32 port = 5;
+    string mac_address = 6;
+    string description = 7;
+}
+
+message ConfigureSensorResponse {
+    leuze_res_opc_ua.ResultCode status = 1;
+}
+
+message ConnectSensorRequest {
+    string sensor_id = 1;
+    optional string ip_address = 2;
+    optional string port = 3;
+}
+
+message ConnectSensorResponse {
+    leuze_res_opc_ua.ResultCode status = 1;
+}
+
+message DeleteSensorRequest {
+    string sensor_id = 1;
+}
+
+message DeleteSensorResponse {
+    leuze_res_opc_ua.ResultCode status = 1;
+}
+
+message DisconnectSensorRequest {
+    string sensor_id = 1;
+}
+
+message DisconnectSensorResponse {
+    leuze_res_opc_ua.ResultCode status = 1;
+}
+
+message DiscoverSensorsRequest {
+    int32 timeout = 2;
+}
+
+message DiscoverSensorsResponse {
+    leuze_res_opc_ua.ResultCode status = 1;
+    // Array of sensor ids.
+    repeated string detected_sensors = 2;
+}

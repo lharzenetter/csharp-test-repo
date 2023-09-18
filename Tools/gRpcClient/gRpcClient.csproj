@@ -14,10 +14,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Protobuf Include="../../../Protos/asset_service.proto" GrpcServices="Client,Server" />
-        <Protobuf Include="../../../Protos/sensor_service.proto" GrpcServices="Client,Server" />
-        <Protobuf Include="../../../Protos/opc_ua_status_codes.proto" GrpcServices="None" />
-        <Protobuf Include="../../../Protos/opc_ua_types.proto" GrpcServices="None" />
+        <Protobuf Include="../../Protos/asset_service.proto" GrpcServices="Client,Server" />
+        <Protobuf Include="../../Protos/sensor_service.proto" GrpcServices="Client,Server" />
+        <Protobuf Include="../../Protos/opc_ua_status_codes.proto" GrpcServices="None" />
+        <Protobuf Include="../../Protos/opc_ua_types.proto" GrpcServices="None" />
     </ItemGroup>
 
     <ItemGroup>

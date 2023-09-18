@@ -1,0 +1,54 @@
+// This file contains common OPC UA messages that are used to store information on RFID tags.
+syntax = "proto3";
+
+package leuze_res_opc_ua;
+
+option csharp_namespace = "Leuze.RES.Gateways.OPCUA.grpc";
+
+// How do we work here? Shall each service map to these errors?
+enum AutoIdOperationStatusEnumeration {
+    SUCCESS_0 = 0;
+    MISC_ERROR_TOTAL_1 = 1;
+    MISC_ERROR_PARTIAL_2 = 2;
+    PERMISSON_ERROR_3 = 3;
+    PASSWORD_ERROR_4 = 4;
+    REGION_NOT_FOUND_ERROR_5 = 5;
+    OP_NOT_POSSIBLE_ERROR_6 = 6;
+    OUT_OF_RANGE_ERROR_7 = 7;
+    NO_IDENTIFIER_8 = 8;
+    MULTIPLE_IDENTIFIERS_9 = 9;
+    READ_ERROR_10 = 10;
+    DECODING_ERROR_11 = 11;
+    MATCH_ERROR_12 = 12;
+    CODE_NOT_SUPPORTED_13 = 13;
+    WRITE_ERROR_14 = 14;
+    NOT_SUPPORTED_BY_DEVICE_15 = 15;
+    NOT_SUPPORTED_BY_TAG_16 = 16;
+    DEVICE_NOT_READY_17 = 17;
+    INVALID_CONFIGURATION_18 = 18;
+    RF_COMMUNICATION_ERROR_19 = 19;
+    DEVICE_FAULT_20 = 20;
+    TAG_HAS_LOW_BATTERY_21 = 21;
+}
+
+enum RfidLockOperationEnumeration {
+    LOCK_0 = 0;
+    UNLOCK_1 = 1;
+    PERMANENT_LOCK_2 = 2;
+    PERMANENT_UNLOCK_3 = 3;
+}
+
+enum RfidLockRegionEnumeration {
+    KILL_0 = 0;
+    ACCESS_1 = 1;
+    EPC_2 = 2;
+    TID_3 = 3;
+    USER_4 = 4;
+}
+
+enum RfidPasswordTypeEnumeration {
+    Access_0 = 0;
+    Kill_1  = 1;
+    Read_2 = 2;
+    Write_3 = 3;
+}
