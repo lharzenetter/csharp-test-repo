@@ -17,9 +17,6 @@ pipeline {
             steps {
                 withSonarQubeEnv(installationName: 'SonarQube') {
                     sh '''
-                        git status
-                        git branch -a
-
                         dotnet sonarscanner begin /k:"RFID_test_AYn-xYqTYbUcb1R9dfKP" \
                         /d:sonar.host.url="https://res-dev.westeurope.cloudapp.azure.com/sonarqube" \
                         /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
