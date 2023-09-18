@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcGreeter.Tests", "GrpcGr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcTestOpcUaServer", "GrpcTestOpcUaServer\GrpcTestOpcUaServer.csproj", "{507ED1D2-2314-4EAD-AA59-789A4E6ED453}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{B49D2433-B7C4-4612-B45F-B68383DB01D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gRpcClient", "Tools\gRpcClient\gRpcClient.csproj", "{39F888FC-D29F-423D-BD65-CE470DE7C63C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +40,12 @@ Global
 		{507ED1D2-2314-4EAD-AA59-789A4E6ED453}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{507ED1D2-2314-4EAD-AA59-789A4E6ED453}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{507ED1D2-2314-4EAD-AA59-789A4E6ED453}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39F888FC-D29F-423D-BD65-CE470DE7C63C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39F888FC-D29F-423D-BD65-CE470DE7C63C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39F888FC-D29F-423D-BD65-CE470DE7C63C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39F888FC-D29F-423D-BD65-CE470DE7C63C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{39F888FC-D29F-423D-BD65-CE470DE7C63C} = {B49D2433-B7C4-4612-B45F-B68383DB01D8}
 	EndGlobalSection
 EndGlobal

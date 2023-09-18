@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <TargetFramework>net7.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Content Include="..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Protobuf Include="../../../Protos/asset_service.proto" GrpcServices="Client,Server" />
+        <Protobuf Include="../../../Protos/sensor_service.proto" GrpcServices="Client,Server" />
+        <Protobuf Include="../../../Protos/opc_ua_status_codes.proto" GrpcServices="None" />
+        <Protobuf Include="../../../Protos/opc_ua_types.proto" GrpcServices="None" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AspNetCoreInjection.TypedFactories" Version="1.2.0" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.49.0" />
+        <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.54.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.9">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.9" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+        <PackageReference Include="Optional" Version="4.0.0" />
+        <PackageReference Include="prometheus-net.AspNetCore.Grpc" Version="8.0.1" />
+        <PackageReference Include="prometheus-net.AspNetCore.HealthChecks" Version="8.0.1" />
+        <PackageReference Include="prometheus-net.NetFramework.AspNet" Version="8.0.1" />
+        <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+    </ItemGroup>
+
+</Project>
