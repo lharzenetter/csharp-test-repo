@@ -6,7 +6,7 @@ pipeline {
         stage('Build and Test') {
             agent {
                 docker {
-                    image 'lharzenetter/dotnet_builder:8.0-preview-sonarqube'
+                    image 'restesting.azurecr.io/dotnet-sonar/sdk:8.0-preview'
                     // workaround to avoid jenkis to pass the jenkins user to the container
                     args '-u root --pull always'
                 }
