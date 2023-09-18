@@ -27,6 +27,9 @@ pipeline {
                         dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
 
                         dotnet sonarscanner end /d:sonar.token=sqp_c0ecc6280fef0a6fbb95bbdf129515f5921e239f
+
+                        # ensure that everything has the rights of the outside jenkins user
+                        chown -R 1001:999 .
                     '''
 
                     stash includes: '**/bin/Release/*/GrpcGreeter.dll', name: 'GRPCGreeter'
