@@ -39,27 +39,27 @@ pipeline {
                 }
             }
         }
-        stage('Docker from stash') {
-            when {
-                branch 'main'
-            }
-            agent {
-                docker {
-                    image 'docker:dind'
-                    // -u root: workaround to avoid jenkis to pass the jenkins user to the container
-                    // -v ... : workaround to enable docker to connect to the docker deamon
-                    args '-u root --pull always -v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
-            steps {
-                unstash 'GRPCGreeter'
-                unstash 'GRPCGreeterClient'
-                sh '''
-                    ls -al GrpcGreeter/bin/Release/net8.0
-                    ls -al GrpcGreeterClient/bin/Release/net8.0
-                '''
-            }
-        }
+        // stage('Docker from stash') {
+        //     when {
+        //         branch 'main'
+        //     }
+        //     agent {
+        //         docker {
+        //             image 'docker:dind'
+        //             // -u root: workaround to avoid jenkis to pass the jenkins user to the container
+        //             // -v ... : workaround to enable docker to connect to the docker deamon
+        //             args '-u root --pull always -v /var/run/docker.sock:/var/run/docker.sock'
+        //         }
+        //     }
+        //     steps {
+        //         unstash 'GRPCGreeter'
+        //         unstash 'GRPCGreeterClient'
+        //         sh '''
+        //             ls -al GrpcGreeter/bin/Release/net8.0
+        //             ls -al GrpcGreeterClient/bin/Release/net8.0
+        //         '''
+        //     }
+        // }
         // stage('Docker build') {
         //     when {
         //         branch 'main'
